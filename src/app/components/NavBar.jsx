@@ -1,8 +1,9 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import NavLink from './NavLink';
 import { Bars3Icon, XmarkIcon } from '@heroicons/react/24/solid';
+import NavLink from './NavLink';
+import MenuOverLay from './MenuOverLay';
 
 const navLinks = [
   {
@@ -20,7 +21,7 @@ const navLinks = [
 ];
 
 const NavBar = () => {
-  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [navBarOpen, setNavBarOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-10 bg-[#121212] bg-opacity-90">
@@ -32,9 +33,9 @@ const NavBar = () => {
           LEGO
         </Link>
         <div className="mobile-menu block md:hidden">
-          {!navbarOpen ? (
+          {!navBarOpen ? (
             <button
-              onClick={() => setNavbarOpen(true)}
+              onClick={() => setNavBarOpen(true)}
               className="flex items-center px-3 py-2 border rounded border-slate-200 text-slate-200 hover:text-white hover:border-white"
             >
               <Bars3Icon className="h-5 w-5" />
@@ -58,6 +59,7 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
+      {navBarOpen ? <MenuOverLay links={navLinks} /> : null}
     </nav>
   );
 };
