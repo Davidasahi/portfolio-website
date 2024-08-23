@@ -15,6 +15,8 @@ const TAB_DATA = [
         <li>Node.js</li>
         <li>Express</li>
         <li>SQL</li>
+        <li>Express</li>
+        <li>SQL</li>
       </ul>
     ),
   },
