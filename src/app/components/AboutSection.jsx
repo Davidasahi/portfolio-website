@@ -14,9 +14,9 @@ const TAB_DATA = [
         <li>React</li>
         <li>Node.js</li>
         <li>Express</li>
-        <li>SQL</li>
-        <li>Express</li>
-        <li>SQL</li>
+        <li>AWS</li>
+        <li>Python</li>
+        <li>SEO</li>
       </ul>
     ),
   },
