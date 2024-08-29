@@ -25,8 +25,8 @@ const TAB_DATA = [
     id: 'education',
     content: (
       <ul className="list-disc pl-2">
-        <li>UIC</li>
-        <li>NCHU</li>
+        <li>University of Illinois Chicago</li>
+        <li>National Chung Hsing University</li>
       </ul>
     ),
   },
@@ -35,8 +35,8 @@ const TAB_DATA = [
     id: 'certifications',
     content: (
       <ul className="list-disc pl-2">
-        <li>Codesmith</li>
-        <li>NCHU</li>
+        <li>Google Ads</li>
+        <li>Google Analytics</li>
       </ul>
     ),
   },
