@@ -37,6 +37,7 @@ const TAB_DATA = [
       <ul className="list-disc pl-2">
         <li>Google Ads</li>
         <li>Google Analytics</li>
+        <li>AWS</li>
       </ul>
     ),
   },
