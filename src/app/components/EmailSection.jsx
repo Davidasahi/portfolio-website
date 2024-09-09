@@ -31,16 +31,56 @@ const EmailSection = () => {
         </div>
       </div>
       <div>
-        <form className="flex flex-col gap-4">
-          <label htmlFor="email" className="text-white">
-            Your email
-          </label>
-          <input
-            type="email"
-            id="email"
-            required
-            placeholder="david@gmail.com"
-          />
+        <form className="flex flex-col">
+          <div className="mb-6">
+            <label
+              htmlFor="email"
+              className="text-white black text-sm mb-2 font-medium"
+            >
+              Your email
+            </label>
+            <input
+              type="email"
+              id="email"
+              required
+              className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
+              placeholder="david@gmail.com"
+            />
+            <label
+              htmlFor="subject"
+              className="text-white black text-sm mb-2 font-medium"
+            >
+              Subject
+            </label>
+            <input
+              type="text"
+              id="subject"
+              required
+              className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
+              placeholder="What do you want to say?"
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="message"
+              className="text-white black text-sm mb-2 font-medium"
+            >
+              Text
+            </label>
+            <textarea
+              type="message"
+              id="message"
+              required
+              className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
+              placeholder="Say somethings..."
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg w-full"
+          >
+            Send Message
+          </button>
         </form>
       </div>
     </section>
