@@ -47,8 +47,17 @@ const HeroSection = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="px-6 py-3 w-full sm:w-fit rounded-full mr-4 bg-gradient-to-br from-primary-400 via-secondary-800 to-cyan-500 hover:bg-slate-800 text-white">
-                Hire Me
+              <button className="px-6 py-3 w-full sm:w-fit rounded-full mr-4 bg-gradient-to-br from-primary-400 via-secondary-800  hover:bg-slate-800 text-white transition-colors">
+                Linkedin
+              </button>
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/yuhsuantung/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="px-6 py-3 w-full sm:w-fit rounded-full mr-4 bg-gradient-to-br from-primary-400 via-cyan-500 hover:bg-slate-800 text-white">
+                GitHub
               </button>
             </Link>
             <Link
