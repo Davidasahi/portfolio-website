@@ -60,13 +60,23 @@ const AboutSection = () => {
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold mb-4">About Me</h2>
           <p className="text-base md:text-lg">
-            Before that, I was a Web Manager at RiverSpring Living, focusing on
-            web management and SEO. I maintained a suite of websites using
-            WordPress and other third-party plugins, and implemented SEO
-            strategies across all sites. This included technical SEO using tools
-            like All in One SEO, Google Search Console, and Google Analytics, as
-            well as content SEO in coordination with our marketing team.
+            Currently, I am working on Embr as a Software Engineer for AWS
+            Lambda performance monitor using
+            JavaScript/TypeScript/React/Node/Express/Next.js. With an MBA and a
+            background with years of experience in software development and tech
+            SEO.
           </p>
+          <br />
+          <ul>
+            <li>
+              - Developed a Web App to monitor cold-start metrics for AWS Lambda
+            </li>
+            <li>- Managed multiple public websites using CMS with Tech SEO</li>
+            <li>
+              - Guest Speaker @remakeLabsTechTalk: Presented “AWS CloudTech.”
+            </li>
+            <li>- English/Chinese Bilingual</li>
+          </ul>
           <div className="flex flex-row justify-start mt-8">
             <TabButton
               selectTab={() => handleTabChange('skills')}

@@ -38,8 +38,10 @@ const HeroSection = () => {
             />
           </h1>
           <p className="text-[#ADB7BE] text-base mb-6 lg:text-xl">
-            How to contact us for tes for technicas for How to contact us for
-            tes for technicas fortechnicachnical support
+            Technical co-founder @ Embr - AWS Lambda performance monitor
+            <br />
+            JavaScript specialist focused on
+            TS/React/Next.js/Node/Express.js/AWS/SQL
           </p>
           <div>
             <Link
