@@ -28,7 +28,7 @@ const projectsData = [
   {
     id: 3,
     title: 'Skincare Products',
-    description: '321',
+    description: 'A smart solution for designing systems with drag ',
     image: './images/embr.png',
     tag: ['All'],
     gitUrl: '/',
