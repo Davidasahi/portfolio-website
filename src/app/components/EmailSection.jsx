@@ -11,7 +11,7 @@ const EmailSection = () => {
     e.preventDefault();
     const data = {
       email: e.target.email.value,
-      subject: e.target.subject.value,
+      name: e.target.name.value,
       message: e.target.message.value,
     };
     const JSONdata = JSON.stringify(data);
@@ -51,8 +51,8 @@ const EmailSection = () => {
         </h5>
         <p className="text-[#ADB7BE] mb-4 max-w-md">
           {' '}
-          In this tutorial, we will build a responsive and customizable
-          portfolio website using NextJs and Tailwind.
+          If you have any questions or would like to connect with me, feel free
+          to leave a message. I will respond as soon as possible.
         </p>
         <div className="socials flex flex-row gap-2">
           <Link href="https://github.com/Davidasahi">
@@ -84,16 +84,16 @@ const EmailSection = () => {
               className="bg-[#18191E] mb-4 border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
               placeholder="david@gmail.com"
             />
-            <label htmlFor="subject" className="text-white text-sm font-medium">
-              Subject
+            <label htmlFor="name" className="text-white text-sm font-medium">
+              Your Name
             </label>
             <input
-              name="subject"
+              name="name"
               type="text"
-              id="subject"
+              id="name"
               required
               className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
-              placeholder="What do you want to say?"
+              placeholder="What is your name?"
             />
           </div>
           <div className="mb-6">
