@@ -1,0 +1,76 @@
+bundle:
+  name: bakehouse-17957297-1793199924
+variables:
+  catalog_name:
+    default: labuser17957297_1793199924
+  lakebase_autoscaling_project:
+    default: bakehouse-labuser17957297-1793199924
+  function_1_name:
+    default: top_products_by_franchise
+  function_2_name:
+    default: franchise_performance
+  embedding_endpoint:
+    default: databricks-gte-large-en
+  embedding_dims:
+    default: '1024'
+resources:
+  experiments:
+    bakehouse_experiment:
+      name: /Users/${workspace.current_user.userName}/bakehouse_app_experiment
+  apps:
+    bakehouse-17957297-1793199924:
+      name: bakehouse-17957297-1793199924
+      description: Bakehouse Franchise Sales Assistant with stateful memory
+      source_code_path: .
+      config:
+        command:
+        - python
+        - server.py
+        env:
+        - name: SERVING_ENDPOINT_NAME
+          value: databricks-claude-sonnet-4-6
+        - name: MLFLOW_EXPERIMENT_ID
+          value: ${resources.experiments.bakehouse_experiment.id}
+        - name: CATALOG_NAME
+          value: ${var.catalog_name}
+        - name: SCHEMA_NAME
+          value: bakehouse
+        - name: LAKEBASE_AUTOSCALING_PROJECT
+          value: ${var.lakebase_autoscaling_project}
+        - name: LAKEBASE_AUTOSCALING_BRANCH
+          value: production
+        - name: FUNCTION_1_NAME
+          value: ${var.function_1_name}
+        - name: FUNCTION_2_NAME
+          value: ${var.function_2_name}
+        - name: EMBEDDING_ENDPOINT
+          value: ${var.embedding_endpoint}
+        - name: EMBEDDING_DIMS
+          value: ${var.embedding_dims}
+      resources:
+      - name: serving-endpoint
+        serving_endpoint:
+          name: databricks-claude-sonnet-4-6
+          permission: CAN_QUERY
+      - name: experiment
+        experiment:
+          experiment_id: ${resources.experiments.bakehouse_experiment.id}
+          permission: CAN_EDIT
+      - name: uc-function-1
+        uc_securable:
+          securable_full_name: ${var.catalog_name}.bakehouse.${var.function_1_name}
+          securable_type: FUNCTION
+          permission: EXECUTE
+      - name: uc-function-2
+        uc_securable:
+          securable_full_name: ${var.catalog_name}.bakehouse.${var.function_2_name}
+          securable_type: FUNCTION
+          permission: EXECUTE
+      - name: database
+        postgres:
+          branch: projects/bakehouse-labuser17957297-1793199924/branches/production
+          database: projects/bakehouse-labuser17957297-1793199924/branches/production/databases/databricks-postgres
+          permission: CAN_CONNECT_AND_CREATE
+targets:
+  dev:
+    default: true

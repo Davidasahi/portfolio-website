@@ -1,0 +1,11 @@
+databricks-langchain[memory]==0.19.0
+unitycatalog-langchain[databricks]==0.4.0
+unitycatalog-ai[databricks]==0.4.0
+langchain==1.2.10
+langchain-community==0.4.1
+fastapi==0.136.3
+uvicorn==0.49.0
+python-dotenv==1.2.2
+langgraph-checkpoint-postgres==3.0.1
+langgraph-prebuilt==1.0.8
+databricks-vectorsearch==0.68

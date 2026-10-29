@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bakehouse Sales Assistant</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #FFF8DC 0%, #FAEBD7 50%, #FFE4C4 100%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #3E2723;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #D2691E 100%);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 20px rgba(139, 69, 19, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.03) 30px,
+      rgba(255,255,255,0.03) 60px
+    );
+  }
+  .header-icon {
+    font-size: 36px;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+  .header-text { z-index: 1; }
+  .header-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFF8DC;
+    letter-spacing: 0.5px;
+  }
+  .header-subtitle {
+    font-size: 12px;
+    color: #FFDEAD;
+    margin-top: 2px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  /* Chat area */
+  .chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+  }
+  .chat-container::-webkit-scrollbar { width: 6px; }
+  .chat-container::-webkit-scrollbar-track { background: transparent; }
+  .chat-container::-webkit-scrollbar-thumb {
+    background: #D2B48C;
+    border-radius: 3px;
+  }
+
+  /* Welcome card */
+  .welcome-card {
+    background: linear-gradient(135deg, #FFFAF0 0%, #FFF8DC 100%);
+    border: 2px solid #DEB887;
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    margin: 20px auto;
+    max-width: 520px;
+    box-shadow: 0 4px 16px rgba(139, 69, 19, 0.1);
+  }
+  .welcome-card h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #8B4513;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  .welcome-card p {
+    color: #6D4C41;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .welcome-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .suggestion-chip {
+    background: #FFF;
+    border: 1.5px solid #D2691E;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #8B4513;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+  .suggestion-chip:hover {
+    background: #D2691E;
+    color: #FFF;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(210, 105, 30, 0.3);
+  }
+
+  /* Messages */
+  .message-row {
+    display: flex;
+    gap: 12px;
+    max-width: 780px;
+    width: 100%;
+    margin: 0 auto;
+    animation: fadeSlideIn 0.3s ease;
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message-row.user { flex-direction: row-reverse; }
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .avatar.agent {
+    background: linear-gradient(135deg, #FAEBD7, #DEB887);
+    border: 2px solid #D2691E;
+    box-shadow: 0 2px 8px rgba(210, 105, 30, 0.2);
+  }
+  .avatar.user {
+    background: linear-gradient(135deg, #FF6B35, #FF8C42);
+    border: 2px solid #E55A2B;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .bubble {
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.65;
+    max-width: 600px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  .bubble.agent {
+    background: #FFF8DC;
+    border: 1.5px solid #DEB887;
+    border-radius: 16px 16px 16px 4px;
+    color: #3E2723;
+    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
+  }
+  .bubble.agent strong { color: #8B4513; }
+  .bubble.agent ul, .bubble.agent ol { margin: 6px 0 6px 18px; padding: 0; }
+  .bubble.agent li { margin: 3px 0; }
+  .bubble.agent code { font-size: 13px; }
+  .bubble.user {
+    background: linear-gradient(135deg, #FF6B35, #FF7F42);
+    border-radius: 16px 16px 4px 16px;
+    color: #FFFFFF;
+    box-shadow: 0 2px 10px rgba(255, 107, 53, 0.25);
+  }
+
+  /* Thinking indicator */
+  .thinking-row {
+    display: flex;
+    gap: 12px;
+    max-width: 780px;
+    width: 100%;
+    margin: 0 auto;
+    animation: fadeSlideIn 0.3s ease;
+  }
+  .thinking-bubble {
+    background: #FFF8DC;
+    border: 1.5px solid #DEB887;
+    border-radius: 16px 16px 16px 4px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8B4513;
+    font-size: 14px;
+    font-style: italic;
+  }
+  .thinking-dots span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #D2691E;
+    border-radius: 50%;
+    animation: bounce 1.4s ease-in-out infinite;
+    margin-right: 4px;
+  }
+  .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+    40% { transform: translateY(-8px); opacity: 1; }
+  }
+
+  /* Input area */
+  .input-area {
+    background: #FFFAF0;
+    border-top: 2px solid #DEB887;
+    padding: 16px 24px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    max-width: 100%;
+  }
+  .input-wrapper {
+    flex: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    width: 100%;
+  }
+  #user-input {
+    flex: 1;
+    padding: 12px 18px;
+    border: 2px solid #DEB887;
+    border-radius: 24px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    background: #FFFFFF;
+    color: #3E2723;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: none;
+    max-height: 120px;
+    min-height: 46px;
+    line-height: 1.4;
+  }
+  #user-input:focus {
+    border-color: #D2691E;
+    box-shadow: 0 0 0 3px rgba(210, 105, 30, 0.15);
+  }
+  #user-input::placeholder { color: #BC8F6F; }
+
+  #send-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #D2691E, #FF6B35);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(210, 105, 30, 0.3);
+  }
+  #send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(210, 105, 30, 0.4);
+  }
+  #send-btn:disabled {
+    background: #C9B99A;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 8px;
+    font-size: 11px;
+    color: #A0876E;
+    background: #FFF5E6;
+    border-top: 1px solid #EDE0D0;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">&#x1F9C1;</div>
+  <div class="header-text">
+    <div class="header-title">Bakehouse Sales Assistant</div>
+    <div class="header-subtitle">Franchise Analytics &bull; Powered by AI</div>
+  </div>
+</div>
+
+<div class="chat-container" id="chat-container">
+  <div class="welcome-card">
+    <h2>&#x1F36A; Welcome to Bakehouse HQ</h2>
+    <p>I'm your franchise sales assistant. Ask me about product trends, franchise performance, revenue comparisons, and more across all 48 locations.</p>
+    <div class="welcome-suggestions">
+      <div class="suggestion-chip" onclick="sendSuggestion(this)">Top products in Tokyo?</div>
+      <div class="suggestion-chip" onclick="sendSuggestion(this)">Compare US vs. Europe revenue</div>
+      <div class="suggestion-chip" onclick="sendSuggestion(this)">Best performing franchise?</div>
+    </div>
+  </div>
+</div>
+
+<div class="input-area">
+  <div class="input-wrapper">
+    <textarea id="user-input" rows="1" placeholder="Ask about your franchise sales..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button id="send-btn" onclick="sendMessage()">&#x27A4;</button>
+  </div>
+</div>
+
+<div class="footer">Powered by Databricks Lakebase + LangGraph</div>
+
+<script>
+  let threadId = null;
+  const chatContainer = document.getElementById('chat-container');
+  const userInput = document.getElementById('user-input');
+  const sendBtn = document.getElementById('send-btn');
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function sendSuggestion(el) {
+    userInput.value = el.textContent;
+    sendMessage();
+  }
+
+  function renderMarkdown(text) {
+    // Lightweight markdown to HTML converter
+    let html = text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')  // escape HTML
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')                     // **bold**
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')                                 // *italic*
+      .replace(/`(.+?)`/g, '<code style="background:#F5E6D3;padding:1px 5px;border-radius:3px;font-size:13px;">$1</code>')  // `code`
+      .replace(/^### (.+)$/gm, '<h4 style="margin:12px 0 6px;color:#8B4513;">$1</h4>')
+      .replace(/^## (.+)$/gm, '<h3 style="margin:14px 0 8px;color:#8B4513;">$1</h3>')
+      .replace(/^# (.+)$/gm, '<h2 style="margin:16px 0 8px;color:#8B4513;">$1</h2>')
+      .replace(/^- (.+)$/gm, '<li style="margin:2px 0;">$1</li>')           // - bullets
+      .replace(/^(\d+)\. (.+)$/gm, '<li style="margin:2px 0;">$2</li>')     // 1. numbered
+      .replace(/(<li.*<\/li>\n?)+/g, '<ul style="margin:8px 0 8px 16px;padding:0;">$&</ul>')  // wrap lists
+      .replace(/\n\n/g, '</p><p style="margin:8px 0;">')                     // paragraphs
+      .replace(/\n/g, '<br>');                                               // line breaks
+    return '<p style="margin:0;">' + html + '</p>';
+  }
+
+  function addMessage(role, text) {
+    // Remove welcome card on first message
+    const welcome = chatContainer.querySelector('.welcome-card');
+    if (welcome) welcome.remove();
+
+    const row = document.createElement('div');
+    row.className = 'message-row ' + role;
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar ' + role;
+    avatar.innerHTML = role === 'agent' ? '&#x1F35E;' : '&#x1F464;';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble ' + role;
+    if (role === 'agent') {
+      bubble.innerHTML = renderMarkdown(text);
+    } else {
+      bubble.textContent = text;
+    }
+
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    chatContainer.appendChild(row);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  function showThinking() {
+    const row = document.createElement('div');
+    row.className = 'thinking-row';
+    row.id = 'thinking';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar agent';
+    avatar.innerHTML = '&#x1F35E;';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'thinking-bubble';
+    bubble.innerHTML = '<div class="thinking-dots"><span></span><span></span><span></span></div> Baking up a response...';
+
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    chatContainer.appendChild(row);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  function hideThinking() {
+    const el = document.getElementById('thinking');
+    if (el) el.remove();
+  }
+
+  async function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    userInput.value = '';
+    userInput.style.height = 'auto';
+    sendBtn.disabled = true;
+    addMessage('user', text);
+    showThinking();
+
+    try {
+      const payload = {
+        input: [{ role: 'user', content: text }]
+      };
+      if (threadId) payload.thread_id = threadId;
+
+      const resp = await fetch('/invocations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json();
+      threadId = data.thread_id || threadId;
+      hideThinking();
+      addMessage('agent', data.output || 'No response received.');
+    } catch (err) {
+      hideThinking();
+      addMessage('agent', 'Something went wrong. Please try again.');
+      console.error(err);
+    }
+
+    sendBtn.disabled = false;
+    userInput.focus();
+  }
+</script>
+</body>
+</html>

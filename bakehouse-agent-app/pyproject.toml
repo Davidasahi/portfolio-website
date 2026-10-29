@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bakehouse-agent-app"
+version = "0.1.0"
+description = "Bakehouse Franchise Sales Assistant - Stateful AI Agent with Lakebase Memory"
+requires-python = ">=3.11"
+dependencies = [
+    "databricks-langchain[memory]==0.19.0",
+    "databricks-sdk==0.94.0",
+    "fastapi==0.136.3",
+    "uvicorn==0.49.0",
+    "python-dotenv==1.2.2",
+    "unitycatalog-langchain[databricks]==0.4.0",
+    "unitycatalog-ai[databricks]==0.4.0",
+    "langchain==1.2.10",
+    "langchain-community==0.4.1",
+    "langgraph==1.0.10",
+    "langgraph-checkpoint==3.0.1",
+    "langgraph-checkpoint-postgres==3.0.1",
+    "langgraph-prebuilt==1.0.8",
+    "typing_extensions>=4.10",
+]
+
+[project.scripts]
+start-server = "server:app"
